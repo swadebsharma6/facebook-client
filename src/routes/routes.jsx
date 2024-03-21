@@ -5,6 +5,7 @@ import Login from "../Pages/Login";
 import ProfilePage from "../Pages/ProfilePage";
 import Register from "../Pages/Register";
 import ErrorPage from "../components/NotFoundPage/ErrorPage";
+import PrivetRoutes from "./PrivetRoutes";
 
 export const router = createBrowserRouter([
     {
@@ -14,7 +15,7 @@ export const router = createBrowserRouter([
       children: [
         {
             path: '/',
-            element: <Home/>
+            element: <PrivetRoutes><Home/></PrivetRoutes>
         },
         {
             path: '/login',
@@ -26,7 +27,7 @@ export const router = createBrowserRouter([
         },
         {
             path: '/profile',
-            element: <ProfilePage/>
+            element: <PrivetRoutes> <ProfilePage/></PrivetRoutes>
         }
       ]
     },

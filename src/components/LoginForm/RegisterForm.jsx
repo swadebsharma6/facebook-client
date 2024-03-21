@@ -1,8 +1,13 @@
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/Provider/AuthProvider";
 
 
 const RegisterForm = () => {
+    const { createUser} = useContext(AuthContext);
+    const [error, setError] = useState('');
     const navigate = useNavigate();
     const {
     register,
@@ -11,8 +16,19 @@ const RegisterForm = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
-    navigate('/login');
+    // console.log(data);
+    // create User
+    createUser(data.email, data.password)
+    .then(result =>{
+        const user = result.user;
+        console.log('regUser', user);
+        toast.success('Register Successfully!')
+        navigate('/login');
+    })
+    .catch(error =>{
+        setError(error.message)
+    })
+    
   }
     return (
         <div className="card">
@@ -51,6 +67,7 @@ const RegisterForm = () => {
             Register
           </button>
         </form>
+        {error && <p className="text-center text-xl font-medium text-red-500">{error}</p>}
         <div className="py-4 lg:py-6">
           <Link to='/login' className="text-center text-xs text-gray-600/95 lg:text-sm">
            Already have an account?

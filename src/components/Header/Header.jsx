@@ -1,3 +1,5 @@
+import { useContext } from "react";
+import toast from "react-hot-toast";
 import { IoLogIn } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import homeIcon from '../../assets/icons/home.svg';
@@ -5,9 +7,20 @@ import LogOutIcon from '../../assets/icons/logout.svg';
 import NotificationIcon from '../../assets/icons/notification.svg';
 import FbLogo from '../../assets/images/Facebook.png';
 import Avatar from '../../assets/images/avatars/avater-1.png';
+import { AuthContext } from "../../context/Provider/AuthProvider";
 
 
 const Header = () => {
+
+    const {logOutUser} = useContext(AuthContext);
+
+    const handleLogOut = ()=>{
+        logOutUser()
+        .then(()=>{
+            toast.success('User LogOut Successfully !')
+        })
+    }
+
     return (
         <nav className="sticky top-0 z-50 border-b border-[#3F3F3F] bg-[#1E1F24] py-4">
         <div className="container flex flex-col items-center justify-between gap-6 sm:flex-row">
@@ -25,7 +38,9 @@ const Header = () => {
             <button className="icon-btn">
               <img src={NotificationIcon} alt="Notification" />
             </button>
-            <button className="icon-btn">
+            <button 
+            onClick={handleLogOut}
+            className="icon-btn">
               <img src={LogOutIcon} alt="Logout" />
             </button>
             <Link to='/login' className="btn-primary">
